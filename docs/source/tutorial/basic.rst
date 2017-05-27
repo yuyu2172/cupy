@@ -129,10 +129,10 @@ transfer the array between devices with this function.
 .. testcode::
 
    with cupy.cuda.Device(0):
-     x_gpu_0 = cupy.ndarray([1, 2, 3])  # create an array in GPU 0
+       x_gpu_0 = cupy.ndarray([1, 2, 3])  # create an array in GPU 0
 
    with cupy.cuda.Device(1):
-     x_gpu_1 = cupy.ndarray(x_gpu_0)  # move the array to GPU 1
+       x_gpu_1 = cupy.ndarray(x_gpu_0)  # move the array to GPU 1
 
 
 .. note::
@@ -180,5 +180,5 @@ A CPU/GPU generic function is defined using it like follows:
 
    # Stable implementation of log(1 + exp(x))
    def softplus(x):
-     xp = cupy.get_array_module(x)
-     return xp.maximum(0, x) + xp.log1p(xp.exp(-abs(x)))
+       xp = cupy.get_array_module(x)
+       return xp.maximum(0, x) + xp.log1p(xp.exp(-abs(x)))
