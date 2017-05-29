@@ -41,8 +41,6 @@ before_install:
       PYTHON_CONFIGURE_OPTS="--enable-unicode=ucs2" pyenv install -ks $PYTHON_VERSION;
       pyenv global $PYTHON_VERSION;
       python --version;
-
-      brew install homebrew/science/hdf5;
     fi
 
 install:
@@ -50,14 +48,13 @@ install:
   - pip install cython
   - python setup.py sdist
   - pip install dist/*.tar.gz
-  - pip install nose hacking mock
-  - pip install autopep8
+  - pip install nose hacking mock autopep8
 
 script:
   - flake8 --config=.flake8.cython
   - autopep8 -r . --global-config .pep8 --diff | tee check_autopep8
   - test ! -s check_autopep8
-  - PYTHONWARNINGS='ignore::FutureWarning,module::DeprecationWarning' nosetests -a '!gpu,!slow' --with-doctest tests/install_tests
+  - PYTHONWARNINGS='ignore::FutureWarning,module::DeprecationWarning' nosetests -a '!gpu' tests/install_tests
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then
       READTHEDOCS=True python setup.py develop;
     fi

@@ -11,25 +11,13 @@ environment:
     # a later point release.
     # See: http://www.appveyor.com/docs/installed-software#python
 
-    - PYTHON: "C:\\Miniconda"
-      PYTHON_VERSION: "2.7.x"
-      PYTHON_ARCH: "32"
-
     - PYTHON: "C:\\Miniconda-x64"
       PYTHON_VERSION: "2.7.x"
       PYTHON_ARCH: "64"
 
-#    - PYTHON: "C:\\Miniconda3"
-#      PYTHON_VERSION: "3.4.x"
-#      PYTHON_ARCH: "32"
-
 #    - PYTHON: "C:\\Miniconda3-x64"
 #      PYTHON_VERSION: "3.4.x"
 #      PYTHON_ARCH: "64"
-
-    - PYTHON: "C:\\Miniconda35"
-      PYTHON_VERSION: "3.5.x"
-      PYTHON_ARCH: "32"
 
     - PYTHON: "C:\\Miniconda35-x64"
       PYTHON_VERSION: "3.5.x"
@@ -55,9 +43,7 @@ install:
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
-  - "conda install -y -q setuptools"
-  - "conda install -y -q cython"
-  - "conda install -y -q h5py"
+  - "conda install -y -q setuptools, cython"
 
 build_script:
   # Build the compiled extension
@@ -67,5 +53,4 @@ test_script:
   # Run the project tests
   - "%CMD_IN_ENV% pip install nose mock hacking"
   - "flake8"
-  - "cd tests\\install_tests"
-  - "nosetests -a \"!gpu,!slow\""
+  - "nosetests -a \"!gpu\" tests\\install_tests"
