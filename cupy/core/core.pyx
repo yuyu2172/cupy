@@ -3,6 +3,7 @@
 from __future__ import division
 import ctypes
 import sys
+cimport numpy as cnumpy
 
 import numpy
 import six
@@ -1497,7 +1498,7 @@ cdef class ndarray:
         """CUDA device on which this array resides."""
         return self.data.device
 
-    cpdef get(self, stream=None):
+    cpdef cnumpy.ndarray get(self, stream=None):
         """Returns a copy of the array on host memory.
 
         Args:
@@ -1513,7 +1514,7 @@ cdef class ndarray:
 
         with self.device:
             a_gpu = ascontiguousarray(self)
-        a_cpu = numpy.empty(self._shape, dtype=self.dtype)
+        cdef cnumpy.ndarray a_cpu = numpy.empty(self._shape, dtype=self.dtype)
         ptr = a_cpu.ctypes.get_as_parameter()
         if stream is None:
             a_gpu.data.copy_to_host(ptr, a_gpu.nbytes)

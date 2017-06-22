@@ -5,6 +5,7 @@ from setuptools import setup
 import sys
 
 import cupy_setup_build
+import numpy as np
 
 
 if sys.version_info[:3] == (3, 5, 0):
@@ -68,4 +69,5 @@ setup(
                    'nose'],
     ext_modules=ext_modules,
     cmdclass={'build_ext': build_ext},
+    include_dirs = [np.get_include()],
 )

@@ -1,5 +1,6 @@
 from libcpp cimport vector
 from cupy.cuda cimport memory
+cimport numpy as cnumpy
 
 from cupy.cuda.function cimport CPointer
 
@@ -53,7 +54,7 @@ cdef class ndarray:
     cpdef ndarray prod(self, axis=*, dtype=*, out=*, keepdims=*)
     cpdef ndarray all(self, axis=*, out=*, keepdims=*)
     cpdef ndarray any(self, axis=*, out=*, keepdims=*)
-    cpdef get(self, stream=*)
+    cpdef cnumpy.ndarray get(self, stream=*)
     cpdef set(self, arr, stream=*)
     cpdef ndarray reduced_view(self, dtype=*)
     cpdef _update_c_contiguity(self)
@@ -63,6 +64,10 @@ cdef class ndarray:
                                  vector.vector[Py_ssize_t]& strides,
                                  bint update_c_contiguity=*)
     cdef CPointer get_pointer(self)
+
+
+cpdef ndarray array(obj, dtype=*, bint copy=*, Py_ssize_t ndmin=*)
+cpdef ndarray dot(ndarray a, ndarray b, ndarray out=*)
 
 
 cdef class Indexer:
